@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://f3n8u16a3lv2"
+path="res://.godot/imported/spritesheet.aseprite-1cc228088efae5b2947c0ee1eb00a428.res"
+
+[deps]
+
+source_file="res://Art/spritesheet.aseprite"
+dest_files=["res://.godot/imported/spritesheet.aseprite-1cc228088efae5b2947c0ee1eb00a428.res"]
+
+[params]
+
