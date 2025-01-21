@@ -7,41 +7,45 @@ var multiplayer_player = preload("res://Prefab/player.tscn")
 var _players_spawn_node
 var host_mode_enabled = false
 
+var peer = ENetMultiplayerPeer.new()
+
+func _ready():
+	multiplayer.server_disconnected.connect(_disconnect_from_server)
+
 func become_host():
 	print("Making Lobby...")
 	
 	_players_spawn_node = get_tree().get_current_scene().get_node("Players")
 	
 	host_mode_enabled = true
+	peer.create_server(SERVER_PORT)
 	
-	var server_peer = ENetMultiplayerPeer.new()
-	server_peer.create_server(SERVER_PORT)
-	
-	multiplayer.multiplayer_peer = server_peer
+	multiplayer.multiplayer_peer = peer
 	
 	_add_player_to_game(1)
 	
 	multiplayer.peer_connected.connect(_add_player_to_game)
 	multiplayer.peer_disconnected.connect(_remove_player_from_game)
 	
-	upnp_setup()
+	#upnp_setup()
 
 func join_as_player(Server_IP):
+
 	print("Joining Lobby as Player...")
+	peer.create_client(Server_IP, SERVER_PORT)
 	
-	var client_peer = ENetMultiplayerPeer.new()
-	client_peer.create_client(Server_IP, SERVER_PORT)
+	multiplayer.multiplayer_peer = peer
 	
-	multiplayer.multiplayer_peer = client_peer
+	print(multiplayer.multiplayer_peer.get_connection_status())
 
 func join_as_spectator(Server_IP):
 	
 	print("Joining Lobby as Spectator...")
+	peer.create_client(Server_IP, SERVER_PORT)
 	
-	var client_peer = ENetMultiplayerPeer.new()
-	client_peer.create_client(Server_IP, SERVER_PORT)
+	multiplayer.multiplayer_peer = peer
 	
-	multiplayer.multiplayer_peer = client_peer
+	multiplayer.server_disconnected.connect(_disconnect_from_server)
 
 func _add_player_to_game(id: int):
 	print("Player %s joined the game!" % id)
@@ -57,6 +61,10 @@ func _remove_player_from_game(id: int):
 		return
 	_players_spawn_node.get_node(str(id)).queue_free()
 
+func _disconnect_from_server():
+	get_tree().get_current_scene().unhide_UI()
+	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
+	peer.close()
 
 func upnp_setup():
 	var upnp = UPNP.new()

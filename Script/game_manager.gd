@@ -33,6 +33,11 @@ func hide_UI():
 	$UI/Menu.hide()
 	unhide_timer()
 
+func unhide_UI():
+	$UI/Menu.visible = true
+	$UI/Timer.visible = false
+	$UI/Timer.time_left = 0
+
 func unhide_timer():
 	$UI/Timer.visible = true
 

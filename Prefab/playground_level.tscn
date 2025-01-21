@@ -1,8 +1,18 @@
-[gd_scene load_steps=2 format=4 uid="uid://vqbx4js3lowi"]
+[gd_scene load_steps=3 format=4 uid="uid://vqbx4js3lowi"]
 
+[ext_resource type="Texture2D" uid="uid://dw5bbirsaiwwl" path="res://Art/spritesheet.png" id="1_agj72"]
 [ext_resource type="TileSet" uid="uid://cl4vhrd5q2klm" path="res://Art/Tilesetter/Ground/tileset_Ground.tres" id="1_uc3jb"]
 
 [node name="Playground Level" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 1
+position = Vector2(583, 281)
+scale = Vector2(3.80312, 3.80312)
+texture = ExtResource("1_agj72")
+region_enabled = true
+region_rect = Rect2(0, 64.1061, 304.097, 159.912)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 texture_filter = 1
