@@ -23,6 +23,12 @@ properties/4/replication_mode = 1
 properties/5/path = NodePath(".:is_it")
 properties/5/spawn = true
 properties/5/replication_mode = 1
+properties/6/path = NodePath("Label:text")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath(".:player_name")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mlufn"]
 properties/0/path = NodePath("InputSynchronizer:input_direction")
@@ -186,10 +192,21 @@ collision_mask = 4
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_qwrmb")
 
+[node name="Label" type="Label" parent="."]
+offset_left = -57.0
+offset_top = -26.0
+offset_right = 57.0
+offset_bottom = -3.0
+theme_override_font_sizes/font_size = 9
+text = "Player: 204040518518951"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false
 texture_filter = 1
-position = Vector2(0, -16)
+position = Vector2(0, -28)
 texture = ExtResource("1_fdorb")
 region_enabled = true
 region_rect = Rect2(48, 0, 16, 16)

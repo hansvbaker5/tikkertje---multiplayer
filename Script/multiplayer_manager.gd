@@ -35,8 +35,6 @@ func join_as_player(Server_IP):
 	peer.create_client(Server_IP, SERVER_PORT)
 	
 	multiplayer.multiplayer_peer = peer
-	
-	print(multiplayer.multiplayer_peer.get_connection_status())
 
 func join_as_spectator(Server_IP):
 	
@@ -53,6 +51,8 @@ func _add_player_to_game(id: int):
 	var player_to_add = multiplayer_player.instantiate()
 	player_to_add.player_id = id
 	player_to_add.name = str(id)
+	player_to_add.player_name = "Player: " + str(id)
+	player_to_add.set_playername()
 	_players_spawn_node.add_child(player_to_add, true)
 
 func _remove_player_from_game(id: int):
@@ -60,6 +60,7 @@ func _remove_player_from_game(id: int):
 	if not _players_spawn_node.has_node(str(id)):
 		return
 	_players_spawn_node.get_node(str(id)).queue_free()
+	get_tree().get_current_scene().set_who_it_is.rpc()
 
 func _disconnect_from_server():
 	get_tree().get_current_scene().unhide_UI()

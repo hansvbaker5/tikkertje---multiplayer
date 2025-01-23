@@ -19,6 +19,8 @@ var touched = false
 var do_jump = false
 var _is_on_floor = true
 
+var player_name = ""
+
 func _ready() -> void:
 	if player_id == 1:
 		is_it = true
@@ -73,6 +75,9 @@ func handle_animation(_delta):
 			animator.play("walk")
 	else:
 		animator.play("jump")
+
+func set_playername():
+	$Label.text = player_name
 
 func _on_area_2d_area_entered(_area: Area2D) -> void:
 	if !_area.get_parent().is_it and is_it and !touched:

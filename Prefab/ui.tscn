@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjb6lawsa63i0"]
+[gd_scene load_steps=6 format=3 uid="uid://cjb6lawsa63i0"]
 
 [ext_resource type="Script" path="res://Script/timer.gd" id="1_158xy"]
 
@@ -6,6 +6,43 @@
 properties/0/path = NodePath(".:time_left")
 properties/0/spawn = true
 properties/0/replication_mode = 1
+
+[sub_resource type="Animation" id="Animation_2qjfd"]
+resource_name = "Result"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 4.9, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(491, -88), Vector2(491, 300), Vector2(491, 300), Vector2(491, -88)]
+}
+
+[sub_resource type="Animation" id="Animation_75ori"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(491, -88)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wqfya"]
+_data = {
+"RESET": SubResource("Animation_75ori"),
+"Result": SubResource("Animation_2qjfd")
+}
 
 [node name="UI" type="CanvasLayer"]
 
@@ -70,7 +107,7 @@ layout_mode = 0
 offset_left = 666.0
 offset_top = 262.0
 offset_right = 877.0
-offset_bottom = 387.0
+offset_bottom = 329.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/Panel"]
 layout_mode = 1
@@ -87,14 +124,6 @@ text = "Server IP:"
 [node name="LineEdit" type="LineEdit" parent="Menu/Panel/VBoxContainer"]
 layout_mode = 2
 placeholder_text = "127.0.0.1"
-
-[node name="Label2" type="Label" parent="Menu/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Port:"
-
-[node name="LineEdit2" type="LineEdit" parent="Menu/Panel/VBoxContainer"]
-layout_mode = 2
-placeholder_text = "8080"
 
 [node name="Timer" type="Control" parent="."]
 visible = false
@@ -124,3 +153,16 @@ wait_time = 180.0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Timer"]
 replication_config = SubResource("SceneReplicationConfig_22ty8")
+
+[node name="Outcome" type="Label" parent="."]
+offset_left = 491.0
+offset_top = -88.0
+offset_right = 660.0
+offset_bottom = -33.0
+theme_override_font_sizes/font_size = 40
+text = "You Win!"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Outcome"]
+libraries = {
+"": SubResource("AnimationLibrary_wqfya")
+}

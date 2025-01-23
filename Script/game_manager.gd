@@ -1,6 +1,8 @@
 extends Node2D
 
 var is_spectator = false
+var player_name = ""
+
 
 func _process(_delta: float) -> void:
 	if is_spectator:
@@ -19,11 +21,13 @@ func become_host():
 
 func join_as_player():
 	hide_UI()
-	MultiplayerManager.join_as_player($UI/Menu/Panel/VBoxContainer/LineEdit.text)
+	MultiplayerManager.join_as_player(
+		$UI/Menu/Panel/VBoxContainer/LineEdit.text)
 
 func join_as_spectator():
 	hide_UI()
-	MultiplayerManager.join_as_spectator($UI/Menu/Panel/VBoxContainer/LineEdit.text)
+	MultiplayerManager.join_as_spectator(
+		$UI/Menu/Panel/VBoxContainer/LineEdit.text)
 	is_spectator = true
 
 func quit_game():
@@ -45,9 +49,16 @@ func _on_timer_timeout() -> void:
 	game_over.rpc()
 
 @rpc("any_peer", "call_local", "reliable")
+func set_who_it_is():
+	$Players.get_children()[0].is_it = true
+
+@rpc("any_peer", "call_local", "reliable")
 func game_over():
 	var current_player = get_tree().get_current_scene().get_node("Players").get_node(str(multiplayer.get_unique_id()))
-	if current_player.is_it:
-		print("Player " + str(multiplayer.get_unique_id()) + " Lost!")
-	else:
-		print("Player " + str(multiplayer.get_unique_id()) + " Won!")
+	if current_player != null:
+		if current_player.is_it:
+			$UI/Outcome.text = "You Lost!"
+			$UI/Outcome/AnimationPlayer.play("Result")
+		else:
+			$UI/Outcome.text = "You Won!"
+			$UI/Outcome/AnimationPlayer.play("Result")
