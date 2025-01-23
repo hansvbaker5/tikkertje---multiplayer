@@ -17,7 +17,7 @@ position = Vector2(100, 500)
 [node name="UI" parent="." instance=ExtResource("3_u13vs")]
 
 [node name="Timer" parent="UI/Timer" index="1"]
-wait_time = 10.0
+wait_time = 120.0
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Prefab/player.tscn")
